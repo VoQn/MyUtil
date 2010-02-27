@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package jp.ne.voqn;
 
 import org.junit.After;
@@ -146,7 +141,6 @@ public class CalculatorTest {
       erroeCatched = false;
     }catch(IllegalArgumentException e){
       erroeCatched = true;
-      System.out.println(e.getStackTrace());
     }
     assertTrue(erroeCatched);
   }
@@ -171,7 +165,6 @@ public class CalculatorTest {
       erroeCatched = false;
     }catch(IllegalArgumentException e){
       erroeCatched = true;
-      System.out.println(e.getStackTrace());
     }
     assertTrue(erroeCatched);
   }
@@ -196,7 +189,6 @@ public class CalculatorTest {
       erroeCatched = false;
     }catch(IllegalArgumentException e){
       erroeCatched = true;
-      System.out.println(e.getStackTrace());
     }
     assertTrue(erroeCatched);
   }
