@@ -73,9 +73,8 @@ public class Calculator {
     if (numbers != null) {
       for (Number num : numbers) {
         if (num != null) {
-          continue;
-        }
         value = Math.min(value, num.doubleValue());
+        }
       }
     }
     return numbers == null ? null : value;
