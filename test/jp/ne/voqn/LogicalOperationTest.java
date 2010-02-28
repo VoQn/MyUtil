@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ne.voqn;
 
 import org.junit.After;
@@ -41,7 +37,6 @@ public class LogicalOperationTest {
    */
   @Test
   public void testAnd() {
-    System.out.println("and");
     boolean[] nullCase = null;
     boolean result;
     boolean errorCatch;
@@ -71,17 +66,10 @@ public class LogicalOperationTest {
       false
     };
 
-    boolean isLessThan2Arguments;
     for (int i = 0; i < testCase.length; i++) {
-      isLessThan2Arguments = testCase[i].length < 2;
-      try {
-        result = LogicalOperation.and(testCase[i]);
-        boolean expResult = expResults[i];
-        assertEquals(expResult, result);
-        assertFalse(isLessThan2Arguments);
-      } catch (IllegalArgumentException e) {
-        assertTrue(isLessThan2Arguments);
-      }
+      result = LogicalOperation.and(testCase[i]);
+      boolean expResult = expResults[i];
+      assertEquals(expResult, result);
     }
   }
 
@@ -90,7 +78,6 @@ public class LogicalOperationTest {
    */
   @Test
   public void testOr() {
-    System.out.println("or");
     boolean[] nullCase = null;
     boolean errorCatch;
     boolean result;
@@ -103,6 +90,7 @@ public class LogicalOperationTest {
     assertTrue(errorCatch);
 
     boolean[][] testCase = {
+      {},
       {true},
       {false},
       {true, true},
@@ -113,6 +101,7 @@ public class LogicalOperationTest {
 
     boolean[] expResults = {
       true,
+      true,
       false,
       true,
       true,
@@ -120,16 +109,10 @@ public class LogicalOperationTest {
       false
     };
 
-    boolean isLessThan2Arguments;
     for (int i = 0; i < testCase.length; i++) {
-      isLessThan2Arguments = testCase[i].length < 2;
-      try {
-        result = LogicalOperation.or(testCase[i]);
-        assertEquals(expResults[i], result);
-        assertFalse(isLessThan2Arguments);
-      } catch (IllegalArgumentException e) {
-        assertTrue(isLessThan2Arguments);
-      }
+      result = LogicalOperation.or(testCase[i]);
+      boolean expResult = expResults[i];
+      assertEquals(expResult, result);
     }
   }
 
@@ -138,7 +121,6 @@ public class LogicalOperationTest {
    */
   @Test
   public void testNand() {
-    System.out.println("nand");
     boolean[] nullCase = null;
     boolean result;
     boolean errorCatch;
@@ -151,6 +133,7 @@ public class LogicalOperationTest {
     assertTrue(errorCatch);
 
     boolean[][] testCase = {
+      {},
       {true},
       {false},
       {true, true},
@@ -161,6 +144,7 @@ public class LogicalOperationTest {
 
     boolean[] expResults = {
       false,
+      false,
       true,
       false,
       true,
@@ -168,16 +152,10 @@ public class LogicalOperationTest {
       true
     };
 
-    boolean isLessThan2Argument;
     for (int i = 0; i < testCase.length; i++) {
-      isLessThan2Argument = testCase[i].length < 2;
-      try {
-        result = LogicalOperation.nand(testCase[i]);
-        assertEquals(expResults[i], result);
-        assertFalse(isLessThan2Argument);
-      } catch (IllegalArgumentException e) {
-        assertTrue(isLessThan2Argument);
-      }
+      result = LogicalOperation.nand(testCase[i]);
+      boolean expResult = expResults[i];
+      assertEquals(expResult, result);
     }
   }
 
@@ -186,7 +164,6 @@ public class LogicalOperationTest {
    */
   @Test
   public void testXor() {
-    System.out.println("xor");
     boolean[] nullCase = null;
     boolean errorCatch;
     boolean result;
@@ -199,6 +176,7 @@ public class LogicalOperationTest {
     assertTrue(errorCatch);
 
     boolean[][] testCase = {
+      {},
       {true},
       {false},
       {true, true},
@@ -211,21 +189,16 @@ public class LogicalOperationTest {
       false,
       false,
       false,
+      false,
       true,
       true,
       false
     };
 
-    boolean isLessThan2Argument;
     for (int i = 0; i < testCase.length; i++) {
-      isLessThan2Argument = testCase[i].length < 2;
-      try {
-        result = LogicalOperation.xor(testCase[i]);
-        assertEquals(expResults[i], result);
-        assertFalse(isLessThan2Argument);
-      } catch (IllegalArgumentException e) {
-        assertTrue(isLessThan2Argument);
-      }
+      result = LogicalOperation.xor(testCase[i]);
+      boolean expResult = expResults[i];
+      assertEquals(expResult, result);
     }
   }
 
@@ -234,8 +207,6 @@ public class LogicalOperationTest {
    */
   @Test
   public void testImp() {
-    System.out.println("imp");
-
     boolean[][] testCase = {
       {true, true},
       {true, false},
@@ -265,7 +236,6 @@ public class LogicalOperationTest {
    */
   @Test
   public void testEq() {
-    System.out.println("eq");
     boolean[] nullCase = null;
     boolean errorCatch;
     boolean result;
@@ -278,6 +248,7 @@ public class LogicalOperationTest {
     assertTrue(errorCatch);
 
     boolean[][] testCase = {
+      {},
       {true},
       {false},
       {true, true},
@@ -290,21 +261,16 @@ public class LogicalOperationTest {
       true,
       true,
       true,
+      true,
       false,
       false,
       true
     };
 
-    boolean isLessThan2Argument;
     for (int i = 0; i < testCase.length; i++) {
-      isLessThan2Argument = testCase[i].length < 2;
-      try {
-        result = LogicalOperation.eq(testCase[i]);
-        assertEquals(expResults[i], result);
-        assertFalse(isLessThan2Argument);
-      } catch (IllegalArgumentException e) {
-        assertTrue(isLessThan2Argument);
-      }
+      result = LogicalOperation.eq(testCase[i]);
+      boolean expResult = expResults[i];
+      assertEquals(expResult, result);
     }
   }
 }
