@@ -7,11 +7,32 @@ package jp.ne.voqn;
 public class Calculator {
 
   /**
+   * Error message when argument array is null or empty. 
+   */
+  private static String ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
+ 
+  /**
+   * Error message when argument is inacceptable negatve number.
+   */
+  private static String ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE;
+
+  /**
+   * Error message then argument over the range
+   */
+  private static String ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE;
+
+  static {
+    ERROR_MESSAGE_ARGUMENT_IS_EMPTY = " arguments not acceptable null or empty array";
+    ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE = "argument not acceptable negative number";
+    ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE = "2nd arguments is over the 1st number";
+  }
+
+  /**
    * Checking number array arguments is empty or not.
    * @param numbers
    * @return arguments is null or empty array, return true;
    */
-  private static boolean isEmpty(Number ... numbers){
+  private static boolean isEmpty(double... numbers) {
     return numbers == null || numbers.length == 0;
   }
 
@@ -19,15 +40,20 @@ public class Calculator {
    * If call "<code>sum(a,b,c,d);</code>",
    * return a + b + c + d
    * @param numbers
-   * @return sum total of arguments. If arguments is null, return 0
+   * @return sum total of arguments.
+   * @exception IllegalArgumentException
+   * If arguments is null or empty, throw it.
+   * @see #isEmpty(java.lang.Number[])
    */
-  public static Number sum(Number... numbers) {
+  public static double sum(double... numbers) {
+    if (isEmpty(numbers)) {
+      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
+      throw new IllegalArgumentException(message);
+    }
     double value = 0;
-    if (numbers != null) {
-      for (Number number : numbers) {
-        if (number != null) {
-          value += number.doubleValue();
-        }
+    for (Number number : numbers) {
+      if (number != null) {
+        value += number.doubleValue();
       }
     }
     return value;
@@ -37,21 +63,23 @@ public class Calculator {
    * If call "<code>product(a,b,c,d)</code>",
    * return a * b * c * d
    * @param numbers
-   * @return product of argument.<br>
-   * If arguments is null or empty array, return 0
+   * @return product of argument.
+   * @exception IllegalArgumentException
+   * If arguments is null or empty array, throw it.
    * @see #isEmpty(java.lang.Number[])
    */
-  public static Number product(Number... numbers) {
-    boolean isEmpty = isEmpty(numbers);
+  public static double product(double... numbers) {
+    if (isEmpty(numbers)) {
+      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
+      throw new IllegalArgumentException(message);
+    }
     double value = 1;
-    if (!isEmpty) {
-      for (Number number : numbers) {
-        if (number != null) {
-          value *= number.doubleValue();
-        }
+    for (Number number : numbers) {
+      if (number != null) {
+        value *= number.doubleValue();
       }
     }
-    return isEmpty ? 0 : value;
+    return value;
   }
 
   /**
@@ -62,38 +90,41 @@ public class Calculator {
    * If arguments is null or empty array, return null.
    * @see #isEmpty(java.lang.Number[])
    */
-  public static Number max(Number... numbers) {
-    boolean isEmpty = isEmpty(numbers);
+  public static double max(double... numbers) {
+    if (isEmpty(numbers)) {
+      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
+      throw new IllegalArgumentException(message);
+    }
     double value = Double.MIN_VALUE;
-    if (!isEmpty) {
-      for (Number number : numbers) {
-        if (number != null) {
-          value = Math.max(value, number.doubleValue());
-        }
+    for (Number number : numbers) {
+      if (number != null) {
+        value = Math.max(value, number.doubleValue());
       }
     }
-    return isEmpty ? null : value;
+    return value;
   }
 
   /**
    * if call "<code>min(a,b,c)</code>"
    * and a &lt b &lt c , return a
    * @param numbers
-   * @return A Object has minimam value of arguments.<br>
-   * If arguments is null or empty array, return null.
+   * @return A Object has minimam value of arguments.
+   * @exception IllegalArgumentException
+   * If arguments is null or empty array, throw it.
    * @see #isEmpty(java.lang.Number[]) 
    */
-  public static Number min(Number... numbers) {
-    boolean isEmpty = isEmpty(numbers);
+  public static double min(double... numbers) {
+    if (isEmpty(numbers)) {
+      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
+      throw new IllegalArgumentException(message);
+    }
     double value = Double.MAX_VALUE;
-    if (!isEmpty) {
-      for (Number num : numbers) {
-        if (num != null) {
-          value = Math.min(value, num.doubleValue());
-        }
+    for (Number num : numbers) {
+      if (num != null) {
+        value = Math.min(value, num.doubleValue());
       }
     }
-    return isEmpty ? null : value;
+    return value;
   }
 
   /**
@@ -101,14 +132,15 @@ public class Calculator {
    * @param n natural number
    * @return n! (<samp>0! = 1, 1! = 1</samp>)
    * @exception IllegalArgumentException 
-   * if n &lt 0, throw it.
+   * If n &lt 0, throw it.
    */
   public static int factorial(int n) {
     int result = 1;
     if (n < 0) {
-      throw new IllegalArgumentException();
+      String message = ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE;
+      throw new IllegalArgumentException(message);
     }
-    for (int i = 1; i < n + 1; i++) {
+    for (int i = 1, l = n + 1; i < l; i++) {
       result *= i;
     }
     return result;
@@ -120,12 +152,17 @@ public class Calculator {
    * @param r number of selected elements
    * @return number of different pattern
    * @exception IllegalArgumentException 
-   * if n &lt r, throw it
+   * If n &lt 0 || n &lt r, throw it
    * @see #factorial(int)
    */
   public static int permutation(int n, int r) {
-    if (n < r) {
-      throw new IllegalArgumentException();
+    boolean isNegative = n < 0;
+    boolean overTheRange = n < r;
+    if (isNegative || overTheRange) {
+      String message = "";
+      message += isNegative ? ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE : "";
+      message += overTheRange ? ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE : "";
+      throw new IllegalArgumentException(message);
     }
     return factorial(n) / factorial(n - r);
   }
@@ -136,11 +173,16 @@ public class Calculator {
    * @param r number of selected elements
    * @return number of pattern nΠr = n ^ r
    * @exception IllegalArgumentException 
-   * If n < r, throw it
+   * If n &lt 0 or n &lt r, throw it
    */
   public static int repeatedPermutation(int n, int r) {
-    if (n < r) {
-      throw new IllegalArgumentException();
+    boolean isNegative = n < 0;
+    boolean overTheRange = n < r;
+    if (isNegative || overTheRange) {
+      String message = "";
+      message += isNegative ? ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE : "";
+      message += overTheRange ? ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE : "";
+      throw new IllegalArgumentException(message);
     }
     return Double.valueOf(Math.pow(n, r)).intValue();
   }
@@ -151,12 +193,17 @@ public class Calculator {
    * @param r number of selected elements
    * @return number of combination pattern .. nCr = n! / (r! * (n - r)!)
    * @exception IllegalargumentException 
-   * if n &lt r, throw it
+   * if n < 0 &lt 0 or n &lt r, throw it
    * @see #factorial(int)
    */
   public static int combination(int n, int r) {
-    if (n < r) {
-      throw new IllegalArgumentException();
+    boolean isNegative = n < 0;
+    boolean overTheRange = n < r;
+    if (isNegative || overTheRange) {
+      String message = "";
+      message += isNegative ? ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE : "";
+      message += overTheRange ? ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE : "";
+      throw new IllegalArgumentException(message);
     }
     return factorial(n) / (factorial(r) * factorial(n - r));
   }
