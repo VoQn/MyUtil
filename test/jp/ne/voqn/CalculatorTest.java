@@ -1,5 +1,6 @@
 package jp.ne.voqn;
 
+import javax.naming.spi.DirStateFactory.Result;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,6 +43,11 @@ public class CalculatorTest {
     Number result = Calculator.sum(numbers);
     assertEquals(expResult, result);
 
+    numbers = new Number[]{};
+    expResult = 0.0;
+    result = Calculator.sum(numbers);
+    assertEquals(expResult, result);
+
     numbers = null;
     expResult = 0.0;
     result = Calculator.sum(numbers);
@@ -56,6 +62,11 @@ public class CalculatorTest {
     Number[] numbers = {2,2,2,2,2};
     Number expResult = Math.pow(2, 5);
     Number result = Calculator.product(numbers);
+    assertEquals(expResult, result);
+
+    numbers = new Number[]{};
+    expResult = 0.0;
+    result = Calculator.product(numbers);
     assertEquals(expResult, result);
 
     numbers = null;
@@ -73,6 +84,12 @@ public class CalculatorTest {
     Number expResult = 1.0;
     Number result = Calculator.max(numbers);
     assertEquals(expResult, result);
+
+    numbers = new Number[]{};
+    expResult = null;
+    result = Calculator.max(numbers);
+    assertEquals(expResult, result);
+
     numbers = null;
     expResult = null;
     result = null;
@@ -86,7 +103,13 @@ public class CalculatorTest {
   public void testMin() {
     Number[] numbers = {-1,0,1};
     Number expResult = -1.0;
-    assertEquals(expResult, Calculator.min(numbers));
+    Number result = Calculator.min(numbers);
+    assertEquals(expResult, result);
+
+    numbers = new Number[]{};
+    expResult = null;
+    result = Calculator.min(numbers);
+    assertEquals(expResult, result);
 
     numbers = null;
     expResult = null;

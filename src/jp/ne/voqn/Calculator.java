@@ -7,6 +7,15 @@ package jp.ne.voqn;
 public class Calculator {
 
   /**
+   * Checking number array arguments is empty or not.
+   * @param numbers
+   * @return arguments is null or empty array, return true;
+   */
+  private static boolean isEmpty(Number ... numbers){
+    return numbers == null || numbers.length == 0;
+  }
+
+  /**
    * If call "<code>sum(a,b,c,d);</code>",
    * return a + b + c + d
    * @param numbers
@@ -28,18 +37,21 @@ public class Calculator {
    * If call "<code>product(a,b,c,d)</code>",
    * return a * b * c * d
    * @param numbers
-   * @return product of argument. If arguments is null, return 0
+   * @return product of argument.<br>
+   * If arguments is null or empty array, return 0
+   * @see #isEmpty(java.lang.Number[])
    */
   public static Number product(Number... numbers) {
+    boolean isEmpty = isEmpty(numbers);
     double value = 1;
-    if (numbers != null) {
+    if (!isEmpty) {
       for (Number number : numbers) {
         if (number != null) {
           value *= number.doubleValue();
         }
       }
     }
-    return numbers == null ? 0 : value;
+    return isEmpty ? 0 : value;
   }
 
   /**
@@ -47,18 +59,20 @@ public class Calculator {
    * and a &lt b &lt c , return c
    * @param numbers
    * @return A Object has maximum value of arguments.<br>
-   * If arguments is null, return null.
+   * If arguments is null or empty array, return null.
+   * @see #isEmpty(java.lang.Number[])
    */
   public static Number max(Number... numbers) {
+    boolean isEmpty = isEmpty(numbers);
     double value = Double.MIN_VALUE;
-    if (numbers != null) {
+    if (!isEmpty) {
       for (Number number : numbers) {
         if (number != null) {
           value = Math.max(value, number.doubleValue());
         }
       }
     }
-    return numbers == null ? null : value;
+    return isEmpty ? null : value;
   }
 
   /**
@@ -66,18 +80,20 @@ public class Calculator {
    * and a &lt b &lt c , return a
    * @param numbers
    * @return A Object has minimam value of arguments.<br>
-   * If arguments is null, return null.
+   * If arguments is null or empty array, return null.
+   * @see #isEmpty(java.lang.Number[]) 
    */
   public static Number min(Number... numbers) {
+    boolean isEmpty = isEmpty(numbers);
     double value = Double.MAX_VALUE;
-    if (numbers != null) {
+    if (!isEmpty) {
       for (Number num : numbers) {
         if (num != null) {
           value = Math.min(value, num.doubleValue());
         }
       }
     }
-    return numbers == null ? null : value;
+    return isEmpty ? null : value;
   }
 
   /**
