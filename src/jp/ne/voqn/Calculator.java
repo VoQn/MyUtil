@@ -10,12 +10,10 @@ public class Calculator {
    * Error message when argument array is null or empty. 
    */
   private static String ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
- 
   /**
    * Error message when argument is inacceptable negatve number.
    */
   private static String ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE;
-
   /**
    * Error message then argument over the range
    */
@@ -30,10 +28,14 @@ public class Calculator {
   /**
    * Checking number array arguments is empty or not.
    * @param numbers
-   * @return arguments is null or empty array, return true;
+   * @throws IllegalArgumentException
+   * arguments is null or empty array, throw it;
    */
-  private static boolean isEmpty(double... numbers) {
-    return numbers == null || numbers.length == 0;
+  private static void checkEmptyArguments(double ... numbers){
+    if (numbers == null || numbers.length == 0) {
+      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
+      throw new IllegalArgumentException(message);
+    }
   }
 
   /**
@@ -46,10 +48,7 @@ public class Calculator {
    * @see #isEmpty(java.lang.Number[])
    */
   public static double sum(double... numbers) {
-    if (isEmpty(numbers)) {
-      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
-      throw new IllegalArgumentException(message);
-    }
+    checkEmptyArguments(numbers);
     double value = 0;
     for (Number number : numbers) {
       if (number != null) {
@@ -69,10 +68,7 @@ public class Calculator {
    * @see #isEmpty(java.lang.Number[])
    */
   public static double product(double... numbers) {
-    if (isEmpty(numbers)) {
-      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
-      throw new IllegalArgumentException(message);
-    }
+    checkEmptyArguments(numbers);
     double value = 1;
     for (Number number : numbers) {
       if (number != null) {
@@ -91,10 +87,7 @@ public class Calculator {
    * @see #isEmpty(java.lang.Number[])
    */
   public static double max(double... numbers) {
-    if (isEmpty(numbers)) {
-      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
-      throw new IllegalArgumentException(message);
-    }
+    checkEmptyArguments(numbers);
     double value = Double.MIN_VALUE;
     for (Number number : numbers) {
       if (number != null) {
@@ -114,10 +107,7 @@ public class Calculator {
    * @see #isEmpty(java.lang.Number[]) 
    */
   public static double min(double... numbers) {
-    if (isEmpty(numbers)) {
-      String message = ERROR_MESSAGE_ARGUMENT_IS_EMPTY;
-      throw new IllegalArgumentException(message);
-    }
+    checkEmptyArguments(numbers);
     double value = Double.MAX_VALUE;
     for (Number num : numbers) {
       if (num != null) {
@@ -125,6 +115,33 @@ public class Calculator {
       }
     }
     return value;
+  }
+
+  /**
+   * Cheking argument number is negative number
+   * @param n
+   * @exception IllegalArgumentException
+   * argument is negative number, throw it
+   */
+  private static void checkNegativeIllegalArgument(int n) {
+    if (n < 0) {
+      String message = ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE;
+      throw new IllegalArgumentException(message);
+    }
+  }
+
+  /**
+   * Cheking the 2nd argument over the 1st one.
+   * @param n
+   * @param r
+   * @exception IllegalArgumentException
+   * if n &lt r, throw it.
+   */
+  private static void checkOutOfRangeArgument(int n, int r) {
+    if (n < r) {
+      String message = ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE;
+      throw new IllegalArgumentException(message);
+    }
   }
 
   /**
@@ -136,10 +153,7 @@ public class Calculator {
    */
   public static int factorial(int n) {
     int result = 1;
-    if (n < 0) {
-      String message = ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE;
-      throw new IllegalArgumentException(message);
-    }
+    checkNegativeIllegalArgument(n);
     for (int i = 1, l = n + 1; i < l; i++) {
       result *= i;
     }
@@ -156,14 +170,8 @@ public class Calculator {
    * @see #factorial(int)
    */
   public static int permutation(int n, int r) {
-    boolean isNegative = n < 0;
-    boolean overTheRange = n < r;
-    if (isNegative || overTheRange) {
-      String message = "";
-      message += isNegative ? ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE : "";
-      message += overTheRange ? ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE : "";
-      throw new IllegalArgumentException(message);
-    }
+    checkNegativeIllegalArgument(n);
+    checkOutOfRangeArgument(n, r);
     return factorial(n) / factorial(n - r);
   }
 
@@ -176,14 +184,8 @@ public class Calculator {
    * If n &lt 0 or n &lt r, throw it
    */
   public static int repeatedPermutation(int n, int r) {
-    boolean isNegative = n < 0;
-    boolean overTheRange = n < r;
-    if (isNegative || overTheRange) {
-      String message = "";
-      message += isNegative ? ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE : "";
-      message += overTheRange ? ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE : "";
-      throw new IllegalArgumentException(message);
-    }
+    checkNegativeIllegalArgument(n);
+    checkOutOfRangeArgument(n, r);
     return Double.valueOf(Math.pow(n, r)).intValue();
   }
 
@@ -197,14 +199,8 @@ public class Calculator {
    * @see #factorial(int)
    */
   public static int combination(int n, int r) {
-    boolean isNegative = n < 0;
-    boolean overTheRange = n < r;
-    if (isNegative || overTheRange) {
-      String message = "";
-      message += isNegative ? ERROR_MESSAGE_ARGUMENT_IS_NEGATIVE : "";
-      message += overTheRange ? ERROR_MESSAGE_ARGUMENTS_OVER_THE_RANGE : "";
-      throw new IllegalArgumentException(message);
-    }
+    checkNegativeIllegalArgument(n);
+    checkOutOfRangeArgument(n, r);
     return factorial(n) / (factorial(r) * factorial(n - r));
   }
 }

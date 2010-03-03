@@ -16,6 +16,18 @@ public class LogicalOperation {
   }
 
   /**
+   * null check
+   * @param bools
+   * @exception IllegalArgumentException if arguments is null, throw it.
+   */
+  private static void checkIsArgumentNull(boolean... bools) {
+    if (bools == null) {
+      String message = ARGUMENT_ERROR_MESSAGE;
+      throw new IllegalArgumentException(message);
+    }
+  }
+
+  /**
    * AND (logical conjunction)
    * @param bools boolean arguments
    * @return All arguments is true, return value is true. <br>
@@ -25,10 +37,7 @@ public class LogicalOperation {
    * if arguments is null thow it.
    */
   public static boolean and(boolean... bools) {
-    if (bools == null) {
-      String message = ARGUMENT_ERROR_MESSAGE;
-      throw new IllegalArgumentException(message);
-    }
+    checkIsArgumentNull(bools);
     boolean result = true;
     for (boolean bool : bools) {
       result = result && bool;
@@ -46,17 +55,10 @@ public class LogicalOperation {
    * If arguments is null.
    */
   public static boolean or(boolean... bools) {
-    if (bools == null) {
-      String message = ARGUMENT_ERROR_MESSAGE;
-      throw new IllegalArgumentException(message);
-    }
-    boolean result = false;
-    if (bools.length == 0) {
-      result = true;
-    } else {
-      for (boolean bool : bools) {
-        result = result || bool;
-      }
+    checkIsArgumentNull(bools);
+    boolean result = bools.length >= 1 ? false : true;
+    for (boolean bool : bools) {
+      result = result || bool;
     }
     return result;
   }
@@ -70,10 +72,7 @@ public class LogicalOperation {
    * @see #and(boolean[])
    */
   public static boolean nand(boolean... bools) {
-    if (bools == null) {
-      String message = ARGUMENT_ERROR_MESSAGE;
-      throw new IllegalArgumentException(message);
-    }
+    checkIsArgumentNull(bools);
     return !and(bools);
   }
 
@@ -88,10 +87,7 @@ public class LogicalOperation {
    * @see #nand(boolean[])
    */
   public static boolean xor(boolean... bools) {
-    if (bools == null) {
-      String message = ARGUMENT_ERROR_MESSAGE;
-      throw new IllegalArgumentException(message);
-    }
+    checkIsArgumentNull(bools);
     return or(bools) && nand(bools);
   }
 
@@ -115,10 +111,7 @@ public class LogicalOperation {
    * @see #xor(boolean[])
    */
   public static boolean eq(boolean... bools) {
-    if (bools == null) {
-      String message = ARGUMENT_ERROR_MESSAGE;
-      throw new IllegalArgumentException(message);
-    }
+    checkIsArgumentNull(bools);
     return !xor(bools);
   }
 }

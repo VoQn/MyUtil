@@ -124,19 +124,20 @@ public class CalculatorTest {
     assertEquals(expResult, result, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected=IllegalArgumentException.class)
   public void testMinNullCase() {
     double[] numbers = null;
     double result = Calculator.min(numbers); // must throw Exception
     fail(Double.toString(result));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected=IllegalArgumentException.class)
   public void testMinEmptyCase() {
     double[] numbers = {};
     double result = Calculator.min(numbers); // must throw Exception
     fail(Double.toString(result));
   }
+
 
   /**
    * Test of factorial method, of class Calculator.
