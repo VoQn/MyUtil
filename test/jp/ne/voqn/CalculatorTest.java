@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static jp.ne.voqn.Calculator.*;
 
 /**
  *
@@ -32,35 +33,35 @@ public class CalculatorTest {
   public void tearDown() {
   }
 
+  private double[][] getErrorArrayCases() {
+    return new double[][]{
+              null,
+              {},};
+  }
+
   /**
    * Test of sum method, of class Calculator.
    */
   @Test
   public void testSumNormal() {
     double[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    double expResult = 55.0;
-    double result = Calculator.sum(numbers);
+    double expResult = 55;
+    double result = sum(numbers);
     assertEquals(expResult, result, 0);
   }
 
   /**
    * Test of sum method, case of argument was null.
    */
-  @Test(expected = IllegalArgumentException.class)
-  public void testSumNullCase() {
-    double[] numbers = null;
-    double result = Calculator.sum(numbers); // must throw Exception
-    fail(Double.toString(result));
-  }
-
-  /**
-   * Test of sum method, case of arguments was empty array
-   */
-  @Test(expected = IllegalArgumentException.class)
-  public void testSumEmptyCase() {
-    double[] numbers = {};
-    double result = Calculator.sum(numbers); // must throw Exception
-    fail(Double.toString(result));
+  @Test
+  public void testSumErrorCase() {
+    for (double[] errorCase : getErrorArrayCases()) {
+      try {
+        double result = sum(errorCase); // must throw Exception
+        fail(Double.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 
   /**
@@ -70,22 +71,19 @@ public class CalculatorTest {
   public void testProduct() {
     double[] numbers = {2, 2, 2, 2, 2};
     double expResult = Math.pow(2, 5);
-    double result = Calculator.product(numbers);
+    double result = product(numbers);
     assertEquals(expResult, result, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testProductNullCase() {
-    double[] numbers = null;
-    double result = Calculator.product(numbers); // must throw Exception
-    fail(Double.toString(result));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testProductEmptyCase() {
-    double[] numbers = {};
-    double result = Calculator.product(numbers); // must throw Exception
-    fail(Double.toString(result));
+  @Test
+  public void testProductErrorCase() {
+    for (double[] errorCase : getErrorArrayCases()) {
+      try {
+        double result = product(errorCase); // must throw Exception
+        fail(Double.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 
   /**
@@ -93,24 +91,21 @@ public class CalculatorTest {
    */
   @Test
   public void testMax() {
-    double[] numbers = {-1, 0, 1};
-    double expResult = 1.0;
-    double result = Calculator.max(numbers);
+    double[] numbers = {-2, -1, 0, 1, 2};
+    double expResult = 2;
+    double result = max(numbers);
     assertEquals(expResult, result, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testMaxNullCase() {
-    double[] numbers = null;
-    double result = Calculator.max(numbers); // must throw Exception
-    fail(Double.toString(result));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testMaxEmptyCase() {
-    double[] numbers = {};
-    double result = Calculator.max(numbers); // must throw Exception
-    fail(Double.toString(result));
+  @Test
+  public void testMaxErrorCase() {
+    for (double[] errorCase : getErrorArrayCases()) {
+      try {
+        double result = max(errorCase); // must throw Exception
+        fail(Double.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 
   /**
@@ -118,126 +113,20 @@ public class CalculatorTest {
    */
   @Test
   public void testMin() {
-    double[] numbers = {-1, 0, 1};
-    double expResult = -1.0;
-    double result = Calculator.min(numbers);
+    double[] numbers = {-2, -1, 0, 1, 2};
+    double expResult = -2;
+    double result = min(numbers);
     assertEquals(expResult, result, 0);
   }
 
-  @Test(expected=IllegalArgumentException.class)
-  public void testMinNullCase() {
-    double[] numbers = null;
-    double result = Calculator.min(numbers); // must throw Exception
-    fail(Double.toString(result));
-  }
-
-  @Test(expected=IllegalArgumentException.class)
-  public void testMinEmptyCase() {
-    double[] numbers = {};
-    double result = Calculator.min(numbers); // must throw Exception
-    fail(Double.toString(result));
-  }
-
-
-  /**
-   * Test of factorial method, of class Calculator.
-   */
   @Test
-  public void testFactorial() {
-    int n = 0;
-    int expResult = 1;
-    int result = Calculator.factorial(n);
-    assertEquals(expResult, result);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testFactorialNegativeCase() {
-    int n = -1;
-    int result = Calculator.factorial(n); // must throw Exception
-    fail(Integer.toString(result));
-  }
-
-  /**
-   * Test of permutation method, of class Calculator.
-   */
-  @Test
-  public void testPermutation() {
-    int n = 0;
-    int r = 0;
-    int expResult = 1;
-    int result = Calculator.permutation(n, r);
-    assertEquals(expResult, result);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testPermutationNegativeCase() {
-    int n = -1;
-    int r = 0;
-    int result = Calculator.permutation(n, r); // must throw Exception
-    fail(Integer.toString(result));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testPermutationOverRangeCase() {
-    int n = 1;
-    int r = 2;
-    int result = Calculator.permutation(n, r); // must throw Exception
-    fail(Integer.toString(result));
-  }
-
-  /**
-   * Test of repeatedPermutation method, of class Calculator.
-   */
-  @Test
-  public void testRepeatedPermutation() {
-    int n = 0;
-    int r = 0;
-    int expResult = 1;
-    int result = Calculator.repeatedPermutation(n, r);
-    assertEquals(expResult, result);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testRepeatedPermutationNegativeCase() {
-    int n = -1;
-    int r = 0;
-    int result = Calculator.repeatedPermutation(n, r); // must throw Exception
-    fail(Integer.toString(result));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testRepeatedPermutationOverRangeCase() {
-    int n = 1;
-    int r = 2;
-    int result = Calculator.repeatedPermutation(n, r); // must throw Exception
-    fail(Integer.toString(result));
-  }
-
-  /**
-   * Test of combination method, of class Calculator.
-   */
-  @Test
-  public void testCombination() {
-    int n = 0;
-    int r = 0;
-    int expResult = 1;
-    int result = Calculator.combination(n, r);
-    assertEquals(expResult, result);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testCombinationNegativeCase() {
-    int n = -1;
-    int r = 0;
-    int result = Calculator.combination(n, r); // must throw Exception
-    fail(Integer.toString(result));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testCombinationOverRangeCase() {
-    int n = 1;
-    int r = 2;
-    int result = Calculator.combination(n, r); // must throw Exception
-    fail(Integer.toString(result));
+  public void testMinErrorCase() {
+    for (double[] errorCase : getErrorArrayCases()) {
+      try {
+        double result = Calculator.min(errorCase); // must throw Exception
+        fail(Double.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 }

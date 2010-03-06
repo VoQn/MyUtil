@@ -12,16 +12,17 @@ public class LogicalOperation {
   private static final String ARGUMENT_ERROR_MESSAGE;
 
   static {
-    ARGUMENT_ERROR_MESSAGE = "this method can not accept null argument";
+    ARGUMENT_ERROR_MESSAGE = "this method can not accept less than 2 arguments";
   }
 
   /**
    * null check
    * @param bools
-   * @exception IllegalArgumentException if arguments is null, throw it.
+   * @exception IllegalArgumentException 
+   * If arguments is null or less than 2, throw it.
    */
-  private static void checkIsArgumentNull(boolean... bools) {
-    if (bools == null) {
+  private static void checkIllegalArgument(boolean... bools) {
+    if (bools == null || bools.length < 2) {
       String message = ARGUMENT_ERROR_MESSAGE;
       throw new IllegalArgumentException(message);
     }
@@ -29,18 +30,21 @@ public class LogicalOperation {
 
   /**
    * AND (logical conjunction)
-   * @param bools boolean arguments
+   * @param bools more than 2 boolean arguments
    * @return All arguments is true, return value is true. <br>
-   * Also empty array (not null, but boolean[0]), it is true.<br>
    * Otherwise it is false.
    * @exception IllegalArgumentException
-   * if arguments is null thow it.
+   * if arguments is null or less than 2 arguments, thow it.
+   * @see #checkIllegalArgument(boolean[])
    */
   public static boolean and(boolean... bools) {
-    checkIsArgumentNull(bools);
+    checkIllegalArgument(bools);
     boolean result = true;
     for (boolean bool : bools) {
       result = result && bool;
+      if (!result) {
+        break;
+      }
     }
     return result;
   }
@@ -49,14 +53,14 @@ public class LogicalOperation {
    * OR (logical disjunction)
    * @param bools more than 2 boolean arguments
    * @return All arguments is false, return value is false.<br>
-   * But empty array (not null, but boolean[0]), it is true.<br>
    * Otherwise it is true.
    * @exception IllegalArgumentException
-   * If arguments is null.
+   * If arguments is null or less than 2 arguments, throw it.
+   * @see #checkIllegalArgument(boolean[])
    */
   public static boolean or(boolean... bools) {
-    checkIsArgumentNull(bools);
-    boolean result = bools.length >= 1 ? false : true;
+    checkIllegalArgument(bools);
+    boolean result = false;
     for (boolean bool : bools) {
       result = result || bool;
     }
@@ -68,11 +72,12 @@ public class LogicalOperation {
    * @param bools more than 2 boolean arguments
    * @return arguments (p, q), return p↑q
    * @exception IllegalArgumentException
-   * If arguments is null throw it
+   * If arguments is null or less than 2 arguments, throw it
    * @see #and(boolean[])
+   * @see #checkIllegalArgument(boolean[])
    */
   public static boolean nand(boolean... bools) {
-    checkIsArgumentNull(bools);
+    checkIllegalArgument(bools);
     return !and(bools);
   }
 
@@ -82,13 +87,21 @@ public class LogicalOperation {
    * @return All arguments is same, return value is false.<br>
    * Otherwise it is true.
    * @exception IllegalArgumentException
-   * If arguments is null throw it
-   * @see #or(boolean[])
-   * @see #nand(boolean[])
+   * If arguments is null or less than 2 arguments, throw it
+   * @see #checkIllegalArgument(boolean[])
    */
   public static boolean xor(boolean... bools) {
-    checkIsArgumentNull(bools);
-    return or(bools) && nand(bools);
+    checkIllegalArgument(bools);
+    int c = 0;
+    for (boolean bool : bools) {
+      if (bool) {
+        c++;
+      }
+      if (c > 1) {
+        break;
+      }
+    }
+    return c == 1;
   }
 
   /**
@@ -107,11 +120,19 @@ public class LogicalOperation {
    * @return All arguments is same, return true.<br>
    * Otherwise it is false.
    * @exception IllegalArgumentException 
-   * If arguments is null throw it.
-   * @see #xor(boolean[])
+   * If arguments is null or less than 2 arguments, throw it.
+   * @see #checkIllegalArgument(bools)
    */
   public static boolean eq(boolean... bools) {
-    checkIsArgumentNull(bools);
-    return !xor(bools);
+    checkIllegalArgument(bools);
+    boolean stack = bools[0];
+    boolean same = true;
+    for (boolean bool : bools) {
+      if (stack != bool) {
+        same = false;
+        break;
+      }
+    }
+    return same;
   }
 }

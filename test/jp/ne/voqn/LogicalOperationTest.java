@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static jp.ne.voqn.LogicalOperation.*;
 
 /**
  *
@@ -32,16 +33,61 @@ public class LogicalOperationTest {
   public void tearDown() {
   }
 
-  private boolean[][] getTestCases(){
+  private boolean[][] getErrorCase() {
     return new boolean[][]{
-      {},
-      {true},
-      {false},
-      {true, true},
-      {true, false},
-      {false, true},
-      {false, false}
-    };
+              null,
+              {},
+              {true},
+              {false}
+            };
+  }
+
+  private boolean[][] getTestCases() {
+    return new boolean[][]{
+              {true, true},
+              {true, false},
+              {false, true},
+              {false, false},
+              {true, true, true},
+              {true, false, true},
+              {false, true, false},
+              {false, false, false}
+            };
+  }
+
+  private boolean[] getExpAndResult() {
+    return new boolean[]{
+              true, false, false, false,
+              true, false, false, false
+            };
+  }
+
+  private boolean[] getExpOrResult() {
+    return new boolean[]{
+              true, true, true, false,
+              true, true, true, false
+            };
+  }
+
+  private boolean[] getExpNandResult() {
+    return new boolean[]{
+              false, true, true, true,
+              false, true, true, true
+            };
+  }
+
+  private boolean[] getExpXorResult() {
+    return new boolean[]{
+              false, true, true, false,
+              false, false, true, false
+            };
+  }
+
+  private boolean[] getExpEqResult() {
+    return new boolean[]{
+              true, false, false, true,
+              true, false, false, true
+            };
   }
 
   /**
@@ -50,28 +96,24 @@ public class LogicalOperationTest {
   @Test
   public void testAnd() {
     boolean[][] testCase = getTestCases();
-
-    boolean[] expResults = {
-      true,
-      true,
-      false,
-      true,
-      false,
-      false,
-      false
-    };
+    boolean[] expResults = getExpAndResult();
 
     for (int i = 0; i < testCase.length; i++) {
-      boolean result = LogicalOperation.and(testCase[i]);
+      boolean result = and(testCase[i]);
       boolean expResult = expResults[i];
       assertEquals(expResult, result);
     }
   }
 
-  @Test(expected=IllegalArgumentException.class)
-  public void testANDNullCase(){
-    boolean result = LogicalOperation.and(null); // must throw Exception
-    fail(Boolean.toString(result));
+  @Test
+  public void testANDErrorCase() {
+    for (boolean[] errorCase : getErrorCase()) {
+      try {
+        boolean result = and(errorCase); // must throw Exception
+        fail(Boolean.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 
   /**
@@ -80,28 +122,24 @@ public class LogicalOperationTest {
   @Test
   public void testOr() {
     boolean[][] testCase = getTestCases();
-
-    boolean[] expResults = {
-      true,
-      true,
-      false,
-      true,
-      true,
-      true,
-      false
-    };
+    boolean[] expResults = getExpOrResult();
 
     for (int i = 0; i < testCase.length; i++) {
-      boolean result = LogicalOperation.or(testCase[i]);
+      boolean result = or(testCase[i]);
       boolean expResult = expResults[i];
       assertEquals(expResult, result);
     }
   }
 
-  @Test(expected=IllegalArgumentException.class)
-  public void testORNullCase(){
-    boolean result = LogicalOperation.or(null); // must throw Exception
-    fail(Boolean.toString(result));
+  @Test
+  public void testORErrorCase() {
+    for (boolean[] errorCase : getErrorCase()) {
+      try {
+        boolean result = or(errorCase); // must throw Exception
+        fail(Boolean.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 
   /**
@@ -110,28 +148,24 @@ public class LogicalOperationTest {
   @Test
   public void testNand() {
     boolean[][] testCase = getTestCases();
-
-    boolean[] expResults = {
-      false,
-      false,
-      true,
-      false,
-      true,
-      true,
-      true
-    };
+    boolean[] expResults = getExpNandResult();
 
     for (int i = 0; i < testCase.length; i++) {
-      boolean result = LogicalOperation.nand(testCase[i]);
+      boolean result = nand(testCase[i]);
       boolean expResult = expResults[i];
       assertEquals(expResult, result);
     }
   }
 
-  @Test(expected=IllegalArgumentException.class)
-  public void testNANDNullCase(){
-    boolean result = LogicalOperation.nand(null); // must throw Exception
-    fail(Boolean.toString(result));
+  @Test
+  public void testNANDErrorCase() {
+    for (boolean[] errorCase : getErrorCase()) {
+      try {
+        boolean result = nand(errorCase); // must throw Exception
+        fail(Boolean.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 
   /**
@@ -140,16 +174,7 @@ public class LogicalOperationTest {
   @Test
   public void testXor() {
     boolean[][] testCase = getTestCases();
-
-    boolean[] expResults = {
-      false,
-      false,
-      false,
-      false,
-      true,
-      true,
-      false
-    };
+    boolean[] expResults = getExpXorResult();
 
     for (int i = 0; i < testCase.length; i++) {
       boolean result = LogicalOperation.xor(testCase[i]);
@@ -158,10 +183,15 @@ public class LogicalOperationTest {
     }
   }
 
-  @Test(expected=IllegalArgumentException.class)
-  public void testXORNullCase(){
-    boolean result = LogicalOperation.xor(null); // must throw Exception
-    fail(Boolean.toString(result));
+  @Test
+  public void testXORErrorCase() {
+    for (boolean[] errorCase : getErrorCase()) {
+      try {
+        boolean result = LogicalOperation.xor(errorCase); // must throw Exception
+        fail(Boolean.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 
   /**
@@ -199,16 +229,7 @@ public class LogicalOperationTest {
   @Test
   public void testEq() {
     boolean[][] testCase = getTestCases();
-
-    boolean[] expResults = {
-      true,
-      true,
-      true,
-      true,
-      false,
-      false,
-      true
-    };
+    boolean[] expResults = getExpEqResult();
 
     for (int i = 0; i < testCase.length; i++) {
       boolean result = LogicalOperation.eq(testCase[i]);
@@ -217,9 +238,14 @@ public class LogicalOperationTest {
     }
   }
 
-  @Test(expected=IllegalArgumentException.class)
-  public void testEQNullCase(){
-    boolean result = LogicalOperation.eq(null); // must throw Exception
-    fail(Boolean.toString(result));
+  @Test
+  public void testEQErrorCase() {
+    for (boolean[] errorCase : getErrorCase()) {
+      try {
+        boolean result = LogicalOperation.eq(errorCase); // must throw Exception
+        fail(Boolean.toString(result));
+      } catch (IllegalArgumentException e) {
+      }
+    }
   }
 }
