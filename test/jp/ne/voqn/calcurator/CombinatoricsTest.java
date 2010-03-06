@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package jp.ne.voqn.calcurator;
 
 import org.junit.After;
@@ -83,9 +78,9 @@ public class CombinatoricsTest {
     int[] r = {0, -1, 2};
     for (int i = 0, l = n.length; i < l; i++) {
       try {
-        int result = repeatedPermutation(n[i], r[i]);
+        long result = repeatedPermutation(n[i], r[i]);
         // must throw Exception
-        fail(Integer.toString(result));
+        fail(Long.toString(result));
       } catch (IllegalArgumentException e) {
       }
     }
