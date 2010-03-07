@@ -84,8 +84,8 @@ public class LogicalOperation {
     /**
      * XOR (Exclusive disjunction)
      * @param bools
-     * @return All arguments is same, return value is false.<br>
-     * Otherwise it is true.
+     * @return arguments have only one true value, return value is true.<br>
+     * Otherwise it is false.
      * @exception IllegalArgumentException
      * If arguments is null or less than 2 arguments, throw it
      * @see #checkIllegalArgument(boolean[])

@@ -44,7 +44,6 @@ public class Combinatorics {
      */
     public static long permutation(int n, int r) {
         checkNegativeIllegalArgument(n);
-        checkNegativeIllegalArgument(r);
         checkOutOfRangeArgument(0, r, n);
         return factInRange(n, n - r).longValue();
     }
@@ -59,7 +58,6 @@ public class Combinatorics {
      */
     public static long repeatedPermutation(int n, int r) {
         checkNegativeIllegalArgument(n);
-        checkNegativeIllegalArgument(r);
         checkOutOfRangeArgument(0, r, n);
         return BigInteger.valueOf(n).pow(r).longValue();
     }
@@ -75,7 +73,6 @@ public class Combinatorics {
      */
     public static long combination(int n, int r) {
         checkNegativeIllegalArgument(n);
-        checkNegativeIllegalArgument(r);
         checkOutOfRangeArgument(0, r, n);
         return factInRange(n, r).divide(fact(n - r)).longValue();
     }
@@ -91,7 +88,6 @@ public class Combinatorics {
      */
     public static long repeatedCombination(int n, int r) {
         checkNegativeIllegalArgument(n);
-        checkNegativeIllegalArgument(r);
         checkOutOfRangeArgument(0, r, n);
         return combination(n + r + 1, r);
     }
