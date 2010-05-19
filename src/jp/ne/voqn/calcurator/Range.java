@@ -1,6 +1,7 @@
 package jp.ne.voqn.calcurator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,10 +35,13 @@ import java.util.List;
  * @author VoQn
  */
 public abstract class Range implements Iterable<Integer> {
+
     private static final String STEP_ARGUMENT_ERROR_MSG;
+
     static{
         STEP_ARGUMENT_ERROR_MSG = "range() step argument must not be 0";
     }
+
     private final int start, stop, step;
     
 
@@ -54,33 +58,37 @@ public abstract class Range implements Iterable<Integer> {
         return stop < start ? -1 : 1;
     }
 
-    public static Range range(int stop) {
+    public static Range of(int stop) {
         return new Range(0, stop, autoSign(0, stop)){};
     }
 
-    public static Range range(int start, int stop) {
+    public static Range of(int start, int stop) {
         return new Range(start, stop, autoSign(start, stop)){};
     }
 
-    public static Range range(int start, int stop, int step) {
+    public static Range of(int start, int stop, int step) {
         return new Range(start, stop, step){};
     }
 
+    @Override
     public Iterator<Integer> iterator() {
 
         return new Iterator<Integer>() {
             private int current = start;
-            
+
+            @Override
             public boolean hasNext() {
                 return step < 0 ? current > stop : current < stop;
             }
 
+            @Override
             public Integer next() {
                 final int value = current;
                 current += step;
                 return value;
             }
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
@@ -98,5 +106,45 @@ public abstract class Range implements Iterable<Integer> {
     @Override
     public String toString(){
         return this.list().toString();
+    }
+
+    public static <E> Range of(E[] elements){
+        return of(elements.length);
+    }
+
+    public static <E> Range of(Collection<E> collection){
+        return of(collection.size());
+    }
+
+    public static Range of(byte[] nums){
+        return of(nums.length);
+    }
+
+    public static Range of(short[] nums){
+        return of(nums.length);
+    }
+
+    public static Range of(int[] nums){
+        return of(nums.length);
+    }
+
+    public static Range of(long[] nums){
+        return of(nums.length);
+    }
+
+    public static Range of(float[] nums){
+        return of(nums.length);
+    }
+
+    public static Range of(double[] nums){
+        return of(nums.length);
+    }
+
+    public static Range of(boolean[] nums){
+        return of(nums.length);
+    }
+
+    public static Range of(char[] nums){
+        return of(nums.length);
     }
 }
