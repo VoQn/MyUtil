@@ -3,4 +3,12 @@
 # ignore NetBeans Project Directory
 nbproject/
 
+# ignore build xml
+build.xml
+build-before-profiler.xml
+
+# ignore tempolary swap file
+*.*~
+*.swp
+
 # END OF FILE
