@@ -2,6 +2,8 @@
 
 # ignore NetBeans Project Directory
 nbproject/
+build/
+dist/
 
 # ignore build xml
 build.xml
