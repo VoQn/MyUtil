@@ -1,0 +1,6 @@
+# gitignore file
+
+# ignore NetBeans Project Directory
+nbproject/
+
+# END OF FILE
